@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blog-post-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: myblogapp
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: angular-service
+                port:
+                  number: 80
+          - path: /auth-api
+            pathType: Prefix
+            backend:
+              service:
+                name: authms-service
+                port:
+                  number: 80
+          - path: /blog-post-api
+            pathType: Prefix
+            backend:
+              service:
+                name: blogpostms-service
+                port:
+                  number: 80        
+          - path: /blog-comments-api
+            pathType: Prefix
+            backend:
+              service:
+                name: blogcommentsms-service
+                port:
+                  number: 80
